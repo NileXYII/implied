@@ -1,1 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head><title>{{ phone[1] }} {{ phone[2] }}</title></head>
+<body>
+    <h1>{{ phone[1] }} {{ phone[2] }}</h1>
+    <img src="{{ url_for('static', filename='uploads/' + phone[-1]) }}" width="200"><br>
 
+    <h3>General</h3>
+    <p>Status: {{ phone[4] }}</p>
+    <p>Release Date: {{ phone[3] }}</p>
+
+    <h3>Body</h3>
+    <p>Dimensions: {{ phone[5] }}</p>
+    <p>Weight: {{ phone[6] }}</p>
+    <p>Build: {{ phone[7] }}</p>
+    <p>SIM: {{ phone[8] }}</p>
+
+    <h3>Display</h3>
+    <p>Type: {{ phone[9] }}</p>
+    <p>Size: {{ phone[10] }}</p>
+    <p>Resolution: {{ phone[11] }}</p>
+    <p>Protection: {{ phone[12] }}</p>
+
+    <h3>Platform</h3>
+    <p>OS: {{ phone[13] }}</p>
+    <p>Chipset: {{ phone[14] }}</p>
+    <p>CPU: {{ phone[15] }}</p>
+    <p>GPU: {{ phone[16] }}</p>
+
+    <h3>Memory</h3>
+    <p>Internal: {{ phone[17] }}</p>
+    <p>Card Slot: {{ phone[18] }}</p>
+
+    <h3>Main Camera</h3>
+    <p>Setup: {{ phone[19] }}</p>
+    <p>Features: {{ phone[20] }}</p>
+    <p>Video: {{ phone[21] }}</p>
+
+    <h3>Selfie Camera</h3>
+    <p>Setup: {{ phone[22] }}</p>
+    <p>Features: {{ phone[23] }}</p>
+    <p>Video: {{ phone[24] }}</p>
+
+    <h3>Battery</h3>
+    <p>Type: {{ phone[25] }}</p>
+    <p>Charging: {{ phone[26] }}</p>
+
+    <h3>Connectivity</h3>
+    <p>WLAN: {{ phone[27] }}</p>
+    <p>Bluetooth: {{ phone[28] }}</p>
+    <p>GPS: {{ phone[29] }}</p>
+    <p>NFC: {{ phone[30] }}</p>
+    <p>USB: {{ phone[31] }}</p>
+
+    <h3>Features</h3>
+    <p>Sensors: {{ phone[32] }}</p>
+
+    <h3>Misc</h3>
+    <p>Colors: {{ phone[33] }}</p>
+    <p>Price: {{ phone[34] }}</p>
+
+    <br><a href="{{ url_for('index') }}">Back</a>
+</body>
+</html>
