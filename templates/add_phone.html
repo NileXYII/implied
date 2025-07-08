@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>Add Phone</title></head>
+<body>
+    <h2>Add Phone Specs</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% for label in [
+            "brand", "model", "release_date", "status",
+            "dimensions", "weight", "build", "sim",
+            "display_type", "display_size", "display_resolution", "display_protection",
+            "os", "chipset", "cpu", "gpu",
+            "internal", "card_slot",
+            "main_camera", "main_features", "main_video",
+            "selfie_camera", "selfie_features", "selfie_video",
+            "battery_type", "charging",
+            "wlan", "bluetooth", "gps", "nfc", "usb",
+            "sensors", "colors", "price"
+        ] %}
+            {{ label.replace("_", " ").capitalize() }}: <input type="text" name="{{ label }}"><br>
+        {% endfor %}
+        Image: <input type="file" name="image"><br>
+        <button type="submit">Add Phone</button>
+    </form>
+</body>
+</html>
