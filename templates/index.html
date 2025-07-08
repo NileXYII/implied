@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>Phone Specs</title></head>
+<body>
+    <h1>Phone Specs</h1>
+    {% if session.get('admin') %}
+        <a href="{{ url_for('add_phone') }}">Add Phone</a> |
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Admin Login</a>
+    {% endif %}
+    <ul>
+        {% for phone in phones %}
+            <li>
+                <a href="{{ url_for('phone_detail', phone_id=phone[0]) }}">
+                    <h2>{{ phone[1] }} {{ phone[2] }}</h2>
+                    <img src="{{ url_for('static', filename='uploads/' + phone[3]) }}" width="100">
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
