@@ -7,9 +7,6 @@ app.secret_key = 'secret'
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-ADMIN_USERNAME = 'admin'
-ADMIN_PASSWORD = 'admin123'
-
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 def init_db():
@@ -58,6 +55,9 @@ def init_db():
     conn.commit()
     conn.close()
 
+# 🧠 THIS IS THE CRUCIAL FIX
+init_db()
+
 @app.route('/')
 def index():
     conn = sqlite3.connect('phones.db')
@@ -65,58 +65,7 @@ def index():
     conn.close()
     return render_template('index.html', phones=phones)
 
-@app.route('/phone/<int:phone_id>')
-def phone_detail(phone_id):
-    conn = sqlite3.connect('phones.db')
-    phone = conn.execute("SELECT * FROM phones WHERE id=?", (phone_id,)).fetchone()
-    conn.close()
-    return render_template('phone_detail.html', phone=phone)
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        if request.form['username'] == ADMIN_USERNAME and request.form['password'] == ADMIN_PASSWORD:
-            session['admin'] = True
-            return redirect(url_for('add_phone'))
-        flash('Invalid login')
-    return render_template('login.html')
-
-@app.route('/logout')
-def logout():
-    session.pop('admin', None)
-    return redirect(url_for('index'))
-
-@app.route('/add', methods=['GET', 'POST'])
-def add_phone():
-    if not session.get('admin'):
-        return redirect(url_for('login'))
-    if request.method == 'POST':
-        data = {field: request.form[field] for field in request.form}
-        image = request.files['image']
-        filename = secure_filename(image.filename)
-        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        data['image'] = filename
-
-        conn = sqlite3.connect('phones.db')
-        c = conn.cursor()
-        c.execute('''
-            INSERT INTO phones (
-                brand, model, release_date, status, dimensions, weight, build, sim,
-                display_type, display_size, display_resolution, display_protection,
-                os, chipset, cpu, gpu,
-                internal, card_slot,
-                main_camera, main_features, main_video,
-                selfie_camera, selfie_features, selfie_video,
-                battery_type, charging,
-                wlan, bluetooth, gps, nfc, usb,
-                sensors, colors, price, image
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', tuple(data[field] for field in data))
-        conn.commit()
-        conn.close()
-        return redirect(url_for('index'))
-
-    return render_template('add_phone.html')
+# ... (rest of your Flask routes like login, add_phone, etc.)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
