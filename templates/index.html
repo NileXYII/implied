@@ -1,23 +1,63 @@
-<!DOCTYPE html>
-<html>
-<head><title>Phone Specs</title></head>
-<body>
-    <h1>Phone Specs</h1>
-    {% if session.get('admin') %}
-        <a href="{{ url_for('add_phone') }}">Add Phone</a> |
-        <a href="{{ url_for('logout') }}">Logout</a>
-    {% else %}
-        <a href="{{ url_for('login') }}">Admin Login</a>
-    {% endif %}
-    <ul>
-        {% for phone in phones %}
-            <li>
-                <a href="{{ url_for('phone_detail', phone_id=phone[0]) }}">
-                    <h2>{{ phone[1] }} {{ phone[2] }}</h2>
-                    <img src="{{ url_for('static', filename='uploads/' + phone[3]) }}" width="100">
+{% extends "base.html" %}
+
+{% block title %}Phone Database - Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="fas fa-mobile-alt"></i> Phone Database</h1>
+            {% if session.user_id %}
+                <a href="{{ url_for('add_phone') }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add New Phone
                 </a>
-            </li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+            {% endif %}
+        </div>
+        
+        {% if phones %}
+            <div class="row">
+                {% for phone in phones %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card phone-card h-100">
+                        {% if phone[3] %}
+                            <img src="{{ url_for('static', filename='uploads/' + phone[3]) }}" 
+                                 class="card-img-top phone-image" alt="{{ phone[1] }} {{ phone[2] }}">
+                        {% else %}
+                            <div class="card-img-top phone-image bg-light d-flex align-items-center justify-content-center">
+                                <i class="fas fa-mobile-alt fa-3x text-muted"></i>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ phone[1] }} {{ phone[2] }}</h5>
+                            <p class="card-text text-muted">{{ phone[1] }}</p>
+                            <div class="mt-auto">
+                                <a href="{{ url_for('phone_detail', phone_id=phone[0]) }}" 
+                                   class="btn btn-outline-primary">
+                                    <i class="fas fa-eye"></i> View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-mobile-alt fa-5x text-muted mb-3"></i>
+                <h3 class="text-muted">No phones found</h3>
+                <p class="text-muted">Start by adding your first phone to the database.</p>
+                {% if session.user_id %}
+                    <a href="{{ url_for('add_phone') }}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add First Phone
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login to Add Phones
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
