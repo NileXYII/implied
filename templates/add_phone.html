@@ -1,25 +1,171 @@
-<!DOCTYPE html>
-<html>
-<head><title>Add Phone</title></head>
-<body>
-    <h2>Add Phone Specs</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% for label in [
-            "brand", "model", "release_date", "status",
-            "dimensions", "weight", "build", "sim",
-            "display_type", "display_size", "display_resolution", "display_protection",
-            "os", "chipset", "cpu", "gpu",
-            "internal", "card_slot",
-            "main_camera", "main_features", "main_video",
-            "selfie_camera", "selfie_features", "selfie_video",
-            "battery_type", "charging",
-            "wlan", "bluetooth", "gps", "nfc", "usb",
-            "sensors", "colors", "price"
-        ] %}
-            {{ label.replace("_", " ").capitalize() }}: <input type="text" name="{{ label }}"><br>
-        {% endfor %}
-        Image: <input type="file" name="image"><br>
-        <button type="submit">Add Phone</button>
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Add Phone - Phone Database{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1><i class="fas fa-plus"></i> Add New Phone</h1>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Basic Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="brand" class="form-label">Brand *</label>
+                                <input type="text" class="form-control" id="brand" name="brand" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="model" class="form-label">Model *</label>
+                                <input type="text" class="form-control" id="model" name="model" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="release_date" class="form-label">Release Date</label>
+                                <input type="text" class="form-control" id="release_date" name="release_date" 
+                                       placeholder="e.g., 2023, Q1 2023">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="">Select Status</option>
+                                    <option value="Available">Available</option>
+                                    <option value="Discontinued">Discontinued</option>
+                                    <option value="Coming Soon">Coming Soon</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Price</label>
+                                <input type="text" class="form-control" id="price" name="price" 
+                                       placeholder="e.g., $999, €799">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Phone Image</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5>Physical Specifications</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="dimensions" class="form-label">Dimensions</label>
+                                <input type="text" class="form-control" id="dimensions" name="dimensions" 
+                                       placeholder="e.g., 158.1 x 75.7 x 8.3 mm">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="weight" class="form-label">Weight</label>
+                                <input type="text" class="form-control" id="weight" name="weight" 
+                                       placeholder="e.g., 188g">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="build" class="form-label">Build</label>
+                                <input type="text" class="form-control" id="build" name="build" 
+                                       placeholder="e.g., Glass front, aluminum frame">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="sim" class="form-label">SIM</label>
+                                <input type="text" class="form-control" id="sim" name="sim" 
+                                       placeholder="e.g., Dual SIM (Nano-SIM)">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="colors" class="form-label">Colors</label>
+                                <input type="text" class="form-control" id="colors" name="colors" 
+                                       placeholder="e.g., Black, White, Blue">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5>Display</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="display_type" class="form-label">Display Type</label>
+                                <input type="text" class="form-control" id="display_type" name="display_type" 
+                                       placeholder="e.g., Super Retina XDR OLED">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="display_size" class="form-label">Display Size</label>
+                                <input type="text" class="form-control" id="display_size" name="display_size" 
+                                       placeholder="e.g., 6.1 inches">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="display_resolution" class="form-label">Resolution</label>
+                                <input type="text" class="form-control" id="display_resolution" name="display_resolution" 
+                                       placeholder="e.g., 1170 x 2532 pixels">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="display_protection" class="form-label">Protection</label>
+                                <input type="text" class="form-control" id="display_protection" name="display_protection" 
+                                       placeholder="e.g., Ceramic Shield glass">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5>Performance</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="os" class="form-label">Operating System</label>
+                                <input type="text" class="form-control" id="os" name="os" 
+                                       placeholder="e.g., iOS 15, Android 12">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="chipset" class="form-label">Chipset</label>
+                                <input type="text" class="form-control" id="chipset" name="chipset"
